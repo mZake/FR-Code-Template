@@ -87,7 +87,6 @@ void Overworld_ChangeMusicTo(u16);
 bool32 IsUpdateLinkStateCBActive(void);
 
 void ClearLinkPlayerObjectEvents(void);
-const struct MapHeader *const Overworld_GetMapHeaderByGroupAndId(u16, u16);
 void ObjectEventMoveDestCoords(struct ObjectEvent *, u32, s16 *, s16 *);
 void CB2_ReturnToField(void);
 void CB2_ReturnToFieldContinueScriptPlayMapMusic(void);
@@ -139,7 +138,6 @@ bool32 Overworld_LinkRecvQueueLengthMoreThan2(void);
 u8 GetCurrentMapType(void);
 
 u8 GetLastUsedWarpMapType(void);
-const struct MapHeader *const GetDestinationWarpMapHeader(void);
 void TryFadeOutOldMapMusic(void);
 void CB2_ReturnToFieldCableClub(void);
 void ResetGameStats(void);
@@ -179,6 +177,9 @@ void StoreInitialPlayerAvatarState(void);
 void UpdateEscapeWarp(s16 x, s16 y);
 bool8 SetDiveWarpEmerge(u16 x, u16 y);
 bool8 SetDiveWarpDive(u16 x, u16 y);
+bool8 HasBadgeToUseFieldMove(u8 id);
+u8 CanMonLearnTMTutor(struct Pokemon *mon, u16 item, u8 tutor);
+u8 PartyHasMonWithFieldMovePotential(u16 move, u16 item, u8 surfingType);
 
 extern u16 *gBGTilemapBuffers1;
 extern u16 *gBGTilemapBuffers2;

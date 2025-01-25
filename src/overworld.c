@@ -35,7 +35,6 @@
 #include "../include/constants/songs.h"
 #include "../include/constants/trainers.h"
 
-u8 CanMonLearnTMTutor(struct Pokemon *mon, u16 item, u8 tutor);
 u8 *MapHeaderCheckScriptTable(u8 tag);
 
 extern const u8 EventScript_UseFlash[];
@@ -81,7 +80,7 @@ u8 PartyHasMonWithFieldMovePotential(u16 move, u16 item, u8 surfingType)
 
 			if (GetMonData(mon, MON_DATA_SPECIES, NULL) != SPECIES_NONE && !GetMonData(mon, MON_DATA_IS_EGG, NULL))
 			{
-				if (MonKnowsMove(mon, move))
+				if (MonKnowsMove(mon, move) && move != 0)
 					return i;
 
 				if (hasHM && CanMonLearnTMTutor(mon, item, 0) == 0)
