@@ -36,8 +36,14 @@
 #include "../include/constants/trainers.h"
 
 u8 CanMonLearnTMTutor(struct Pokemon *mon, u16 item, u8 tutor);
+u8 *MapHeaderCheckScriptTable(u8 tag);
 
-extern u8 EventScript_UseFlash[];
+extern const u8 EventScript_UseFlash[];
+extern const u8 EventScript_UseSurf[];
+extern const u8 EventScript_UseWaterfall[];
+extern const u8 EventScript_WaterDyedBlue[];
+extern const u8 EventScript_WallOfWater[];
+extern const u8 EventScript_CannotUseWaterfall[];
 
 // The values here can be modified i guess
 const u8 gFieldMoveBadgeRequirements[] =
@@ -87,6 +93,13 @@ u8 PartyHasMonWithFieldMovePotential(u16 move, u16 item, u8 surfingType)
 	return PARTY_SIZE;
 }
 
+bool8 IsPlayerSurfingNorthOrSouth(void)
+{
+	u8 dir = GetPlayerMovementDirection();
+
+	return (dir == DIR_SOUTH || dir == DIR_NORTH) && TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_SURFING);
+}
+
 static const u8* TryUseFlashInDarkCave(void)
 {
 	CanPlayerUseFlashInCurrentLocation();
@@ -95,6 +108,74 @@ static const u8* TryUseFlashInDarkCave(void)
 	{
 		if ((gSpecialVar_0x8004 = gFieldEffectArguments[0] = PartyHasMonWithFieldMovePotential(MOVE_FLASH, ITEM_HM05_FLASH, 0)) < PARTY_SIZE)
 			return EventScript_UseFlash;
+	}
+
+	return NULL;
+}
+
+// Todo: hook
+bool8 TryRunOnFrameMapScript(void)
+{
+	if (gQuestLogState != 3)
+	{
+		const u8* ptr;
+
+		ptr = TryUseFlashInDarkCave();
+
+		if (ptr == NULL)
+			ptr = MapHeaderCheckScriptTable(2);
+
+		if (ptr != NULL)
+		{
+			ScriptContext_SetupScript(ptr);
+			return TRUE;
+		}
+	}
+
+	return FALSE;
+}
+
+// Todo: hook
+const u8* GetInteractedWaterScript(u32 unused1, u8 metatileBehavior, u8 direction)
+{
+	u16 item = ITEM_NONE;
+
+	if (IsPlayerFacingSurfableFishableWater())
+	{
+		if (HasBadgeToUseFieldMove(FIELD_MOVE_SURF))
+		{
+			item = ITEM_HM03_SURF;
+			u8 partyId = PartyHasMonWithFieldMovePotential(MOVE_SURF, item, 1);
+
+			if (partyId < PARTY_SIZE)
+			{
+				gSpecialVar_0x8004 = partyId;
+				return EventScript_UseSurf;
+			}
+
+			return EventScript_WaterDyedBlue;
+		}
+	}
+	else if (MetatileBehavior_IsWaterfall(metatileBehavior))
+	{
+		if (HasBadgeToUseFieldMove(FIELD_MOVE_WATERFALL))
+		{
+			if (IsPlayerSurfingNorthOrSouth())
+			{
+				item = ITEM_HM07_WATERFALL;
+				u8 partyId = PartyHasMonWithFieldMovePotential(MOVE_WATERFALL, item, 2);
+
+				if (partyId < PARTY_SIZE)
+				{
+					gSpecialVar_0x8004 = partyId;
+					return EventScript_UseWaterfall;
+				}
+
+				return EventScript_WallOfWater;
+			}
+			else
+				return EventScript_CannotUseWaterfall;
+		}
 	}
 
 	return NULL;
