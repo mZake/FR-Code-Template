@@ -112,7 +112,6 @@ static const u8* TryUseFlashInDarkCave(void)
 	return NULL;
 }
 
-// Todo: hook
 bool8 TryRunOnFrameMapScript(void)
 {
 	if (gQuestLogState != 3)
@@ -134,7 +133,6 @@ bool8 TryRunOnFrameMapScript(void)
 	return FALSE;
 }
 
-// Todo: hook
 const u8* GetInteractedWaterScript(u32 unused1, u8 metatileBehavior, u8 direction)
 {
 	u16 item = ITEM_NONE;

@@ -1,2 +1,2 @@
-# Syntax: [Variable Name] [Variable Pointer]
-# Example: gText_RivalsName 083E2488
+gFieldMoveCursorCallbacks 08124614
+gFieldMoveCursorCallbacks 08124680

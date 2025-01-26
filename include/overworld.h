@@ -180,6 +180,7 @@ bool8 SetDiveWarpDive(u16 x, u16 y);
 bool8 HasBadgeToUseFieldMove(u8 id);
 u8 CanMonLearnTMTutor(struct Pokemon *mon, u16 item, u8 tutor);
 u8 PartyHasMonWithFieldMovePotential(u16 move, u16 item, u8 surfingType);
+bool8 IsPlayerSurfingNorthOrSouth(void);
 
 extern u16 *gBGTilemapBuffers1;
 extern u16 *gBGTilemapBuffers2;

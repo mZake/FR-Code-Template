@@ -1,2 +1,3 @@
-# Syntax: [Function Name] [Function Address] [Number of Parameters]
-# Example: GetMonData 0803FBE8 3
+TryRunOnFrameMapScript 8069C74 0
+GetInteractedWaterScript 806D548 3
+SetPartyMonFieldSelectionActions 81229FC 2
