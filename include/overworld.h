@@ -177,10 +177,10 @@ void StoreInitialPlayerAvatarState(void);
 void UpdateEscapeWarp(s16 x, s16 y);
 bool8 SetDiveWarpEmerge(u16 x, u16 y);
 bool8 SetDiveWarpDive(u16 x, u16 y);
-bool8 HasBadgeToUseFieldMove(u8 id);
-u8 CanMonLearnTMTutor(struct Pokemon *mon, u16 item, u8 tutor);
-u8 PartyHasMonWithFieldMovePotential(u16 move, u16 item, u8 surfingType);
-bool8 IsPlayerSurfingNorthOrSouth(void);
+bool8 __attribute__((long_call)) HasBadgeToUseFieldMove(u8 id);
+u8 __attribute__((long_call)) CanMonLearnTMTutor(struct Pokemon *mon, u16 item, u8 tutor);
+u8 __attribute__((long_call)) PartyHasMonWithFieldMovePotential(u16 move, u16 item, u8 surfingType);
+bool8 __attribute__((long_call)) IsPlayerSurfingNorthOrSouth(void);
 
 extern u16 *gBGTilemapBuffers1;
 extern u16 *gBGTilemapBuffers2;
